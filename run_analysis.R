@@ -30,21 +30,62 @@ folder <- "test"
 
 test_x <- read.table(paste0(data_folder, folder, "/X_", folder, ".txt" ))
 test_y <- read.table(paste0(data_folder, folder, "/y_", folder, ".txt" ))
-test_s <- read.table(paste0(data_folder, folder, "/y_", folder, ".txt" ))
+test_s <- read.table(paste0(data_folder, folder, "/subject_", folder, ".txt" ))
 
 # Assembly
-# add column names to the X file
+# add column names
+# to the X file
 names(test_x) <- unlist(features[2])
-# bind on the subjects
+# to the y file
+names(test_y) <- "activity"
+# to the s file
 names(test_s) <- "id"
-test_x_s <- cbind(test_x, test_s)
+
+# and combine them all
+test_all <- cbind(test_s, test_y, test_x)
 
 # remove the old files to free up some memory
-rm(test_x, test_s)
+rm(test_x, test_y, test_s)
 
-# bind on the activities
-test_x_all <- 
+# ------------------------------------------
 
+# read in files from the train folder
+folder <- "train"
+
+train_x <- read.table(paste0(data_folder, folder, "/X_", folder, ".txt" ))
+train_y <- read.table(paste0(data_folder, folder, "/y_", folder, ".txt" ))
+train_s <- read.table(paste0(data_folder, folder, "/subject_", folder, ".txt" ))
+
+# Assembly
+# add column names
+# to the X file
+names(train_x) <- unlist(features[2])
+# to the y file
+names(train_y) <- "activity"
+# to the s file
+names(train_s) <- "id"
+
+# and combine them all
+train_all <- cbind(train_s, train_y, train_x)
+
+# remove the old files to free up some memory
+rm(train_x, train_y, train_s)
+
+# -------------------------------------------------
+
+# combine the 2 data frames
+data_all <- rbind(train_all, test_all)
+# remove the old files to free up some memory
+rm(train_all, test_all)
+
+# -------------------------------------------------
+
+# wrap the dataframe in a data frame table so we can use dplyr
+data_all <- tbl_df(data_all)
+
+# check whether there are any missing values in the data
+# taken from lecture notes, week 3, summarizingData, slide 11
+all(colSums(is.na(data_all))==0) # returns [1] TRUE
 
 
 
