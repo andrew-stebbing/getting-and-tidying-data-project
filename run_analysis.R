@@ -14,39 +14,36 @@
 # This script assumes the correct working directory for the course
 # project is active
 
+# The dplyr library will be used
 library(dplyr)
 
-# There are 2 sets
-sets <- c("test", "train")
-# and 3 files in each
-files <- c("X", "y", "subject")
+# read in the 2 common files to both sets: features and activities
+# features will act as the column headings
+# activities will act as a lookup table
+data_folder <- "./UCI HAR Dataset/"
 
-data_folder <- "./UCI Har Dataset/"
-
-# obtain the features, which will act as the column headings
 features <- read.table(paste0(data_folder, "features.txt"))
-
-# 2 level nested loop to read the 6 required file paths
-file_paths <- vector(length = 6)
-for (i in seq_along(sets)) {
-    # read the 3 files
-    for (j in seq_along(files))  {
-        file_path <- (paste0(data_folder, sets[i], "/", files[j], "_", sets[i], ".txt"))
-        index <- i^2 + j - 1
-        file_paths[index] <- file_path
-    }
-}
-file_paths
-
-# sequence along the file_paths in 2 sections of 3 files
-# read 3 files
-# and column names (features to the X file) 
-# then add on (cbind) the y and subject files
-
-# obtain details about the 6 types of activities
 activities <- read.table(paste0(data_folder, "activity_labels.txt"))
 
+# read in files from the test folder
+folder <- "test"
 
+test_x <- read.table(paste0(data_folder, folder, "/X_", folder, ".txt" ))
+test_y <- read.table(paste0(data_folder, folder, "/y_", folder, ".txt" ))
+test_s <- read.table(paste0(data_folder, folder, "/y_", folder, ".txt" ))
+
+# Assembly
+# add column names to the X file
+names(test_x) <- unlist(features[2])
+# bind on the subjects
+names(test_s) <- "id"
+test_x_s <- cbind(test_x, test_s)
+
+# remove the old files to free up some memory
+rm(test_x, test_s)
+
+# bind on the activities
+test_x_all <- 
 
 
 
