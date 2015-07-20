@@ -114,6 +114,14 @@ data_all <- data_all[, n]
 
 # Use descriptive activity names to name the activities 
 # in the data set
+# Use the activities dataframe as a look-up table
 
+act <- activities[match(data_all$activity, activities$V1), 2]
+# returns a vector of factors which can be used to convert
+# the activities columns
+data_all$activity <- act
 
+# ------------------------------------------------
+
+# STEP 4
 
