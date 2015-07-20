@@ -17,12 +17,13 @@
 # The dplyr library will be used
 library(dplyr)
 
+# STEP 1.
 # read in the 2 common files to both sets: features and activities
 # features will act as the column headings
 # activities will act as a lookup table
 data_folder <- "./UCI HAR Dataset/"
 
-features <- read.table(paste0(data_folder, "features.txt"))
+features <- read.table(paste0(data_folder, "features.txt"), as.is = c(TRUE, TRUE))
 activities <- read.table(paste0(data_folder, "activity_labels.txt"))
 
 # read in files from the test folder
@@ -87,9 +88,32 @@ data_all <- tbl_df(data_all)
 # taken from lecture notes, week 3, summarizingData, slide 11
 all(colSums(is.na(data_all))==0) # returns [1] TRUE
 
+# -------------------------------------------------
 
+# STEP 2
 
+# subset the data frame leaving only the columns for mean
+# and standard deviation (they have 'mean' or 'std' in the name)
+# use 'select' from the dplyr package and the special function
+# 'contains'
 
+data_all <- select(data_all, contains(grep("mean|std", data_all)))
+
+# can't get select(contains(...)) to work as it returns
+# Error: found duplicated column name
+
+# the first 561 columns have the same names as features
+# use regexp on names()
+n <- grep("mean|std|id|activity", names(data_all))
+data_all <- data_all[, n]
+
+# at this stage the dataframe is 10299  X  81
+# -----------------------------------------------
+
+# STEP 3
+
+# Use descriptive activity names to name the activities 
+# in the data set
 
 
 
