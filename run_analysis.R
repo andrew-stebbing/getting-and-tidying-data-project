@@ -35,7 +35,7 @@ train_x <- read.table(paste0(data_folder, folder, "/X_", folder, ".txt" ))
 train_y <- read.table(paste0(data_folder, folder, "/y_", folder, ".txt" ))
 train_s <- read.table(paste0(data_folder, folder, "/subject_", folder, ".txt" ))
 
-# Assemble test files
+# Assemble train files
 names(train_x) <- unlist(features[2]) # Step 4
 names(train_y) <- "activity"
 names(train_s) <- "subject"
