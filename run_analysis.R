@@ -21,7 +21,7 @@ test_x <- read.table(paste0(data_folder, folder, "/X_", folder, ".txt" ))
 test_y <- read.table(paste0(data_folder, folder, "/y_", folder, ".txt" ))
 test_s <- read.table(paste0(data_folder, folder, "/subject_", folder, ".txt" ))
 
-# Assembly test files
+# Assemble test files
 names(test_x) <- unlist(features[2]) # Step 4
 names(test_y) <- "activity"
 names(test_s) <- "subject"
@@ -57,28 +57,12 @@ if(all(colSums(is.na(data_all))==0)) message("\nThe data frame has no missing va
 n <- grep("mean[^F]|std|subject|activity", names(data_all))
 data_all <- data_all[, n]
 
-# at this stage the dataframe is 10299  X  68
-
 # STEP 8
 act <- activities[match(data_all$activity, activities$V1), 2]
 data_all$activity <- act
 
-# **********************************************
-# ERASE THESE STEPs BEFORE SUBMITTING
-# save(data_all, file = "data_all")
-# load("./temp_data/data_all")
-# ***********************************************
-
-# dimensions are 10299 X 68
-
 # STEP 9
 molten_data <- gather(data_all, sample, reading, -subject, -activity)
-
-# **********************************************
-# ERASE THESE STEPs BEFORE SUBMITTING
-# save(molten_data, file = "molten_data" )
-# load("./temp_data/molten_data" )
-# **********************************************
 
 # Step 10
 molten_data <- mutate(molten_data,
@@ -89,7 +73,7 @@ summary <- summarise(group_by(molten_data, subject, activity, statistic), averag
 
 # Step 12
 summary <- spread(summary, statistic, average_for_activity)
-# View(summary)
+
 # Step 13
 save(summary, file = "summary.RData")
 
