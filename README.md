@@ -1,8 +1,8 @@
-#Getting and Tidying Data
+#Getting and Cleaning Data
 
 ##Course Project
 
-This is the project for the course Getting and Tidying Data, module 3 of the Data Analysis Track from [Johns Hopkins University](https://www.jhu.edu/) and hosted on [Coursera](https://www.coursera.org/).
+This is the project for the course Getting and Cleaning Data, module 3 of the [Data Analysis Track](https://www.coursera.org/specializations/jhudatascience/1) from [Johns Hopkins University](https://www.jhu.edu/) and hosted on [Coursera](https://www.coursera.org/).
 
 ###Overview
 
