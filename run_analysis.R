@@ -24,7 +24,7 @@ test_s <- read.table(paste0(data_folder, folder, "/subject_", folder, ".txt" ))
 # Assembly test files
 names(test_x) <- unlist(features[2]) # Step 4
 names(test_y) <- "activity"
-names(test_s) <- "id"
+names(test_s) <- "subject"
 
 test_all <- cbind(test_s, test_y, test_x)
 rm(test_x, test_y, test_s)
@@ -38,7 +38,7 @@ train_s <- read.table(paste0(data_folder, folder, "/subject_", folder, ".txt" ))
 # Assemble test files
 names(train_x) <- unlist(features[2]) # Step 4
 names(train_y) <- "activity"
-names(train_s) <- "id"
+names(train_s) <- "subject"
 
 train_all <- cbind(train_s, train_y, train_x)
 rm(train_x, train_y, train_s)
@@ -65,18 +65,18 @@ data_all$activity <- act
 
 # **********************************************
 # ERASE THESE STEPs BEFORE SUBMITTING
-save(data_all, file = "data_all")
+# save(data_all, file = "data_all")
 # load("./temp_data/data_all")
 # ***********************************************
 
 # dimensions are 10299 X 68
 
 # STEP 9
-molten_data <- gather(data_all, sample, reading, -id, -activity)
+molten_data <- gather(data_all, sample, reading, -subject, -activity)
 
 # **********************************************
 # ERASE THESE STEPs BEFORE SUBMITTING
-save(molten_data, file = "molten_data" )
+# save(molten_data, file = "molten_data" )
 # load("./temp_data/molten_data" )
 # **********************************************
 
@@ -85,11 +85,11 @@ molten_data <- mutate(molten_data,
                        statistic = factor( regexpr("mean", molten_data$sample) < 0,
                                            labels = c("average_mean", "average_standard_deviation")))
 # Step 11
-summary <- summarise(group_by(molten_data, id, activity, statistic), average_for_activity = mean(reading, na.rm = TRUE))
+summary <- summarise(group_by(molten_data, subject, activity, statistic), average_for_activity = mean(reading, na.rm = TRUE))
 
 # Step 12
 summary <- spread(summary, statistic, average_for_activity)
-View(summary)
+# View(summary)
 # Step 13
 save(summary, file = "summary.RData")
 
