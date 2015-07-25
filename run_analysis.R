@@ -16,6 +16,7 @@
 
 # The dplyr library will be used
 library(dplyr)
+library(tidyr)
 
 # STEP 1.
 # read in the 2 common files to both sets: features and activities
@@ -23,7 +24,8 @@ library(dplyr)
 # activities will act as a lookup table
 data_folder <- "./UCI HAR Dataset/"
 
-features <- read.table(paste0(data_folder, "features.txt"), as.is = c(TRUE, TRUE))
+# features <- read.table(paste0(data_folder, "features.txt"), as.is = c(TRUE, TRUE))
+features <- read.table(paste0(data_folder, "features.txt"), stringsAsFactors = FALSE)
 activities <- read.table(paste0(data_folder, "activity_labels.txt"))
 
 # read in files from the test folder
@@ -97,17 +99,19 @@ all(colSums(is.na(data_all))==0) # returns [1] TRUE
 # use 'select' from the dplyr package and the special function
 # 'contains'
 
-data_all <- select(data_all, contains(grep("mean|std", data_all)))
+# doesn't work
+# data_all <- select(data_all, contains(grep("mean|std", data_all)))
 
 # can't get select(contains(...)) to work as it returns
 # Error: found duplicated column name
 
 # the first 561 columns have the same names as features
 # use regexp on names()
-n <- grep("mean|std|id|activity", names(data_all))
+n <- grep("mean[^F]|std|id|activity", names(data_all))
 data_all <- data_all[, n]
 
-# at this stage the dataframe is 10299  X  81
+# at this stage the dataframe is 10299  X  68
+
 # -----------------------------------------------
 
 # STEP 3
@@ -121,7 +125,49 @@ act <- activities[match(data_all$activity, activities$V1), 2]
 # the activities columns
 data_all$activity <- act
 
+# **********************************************
+# save the file
+# EARSE THESE STEP BEFORE SUBMITTING
+save(data_all, file = "./temp_data/data_all")
+load("./temp_data/data_all")
+# ***********************************************
+
+# dimensions are 10299 X 68
+
 # ------------------------------------------------
 
 # STEP 4
 
+# Appropriately label the data set with descriptive variable names.
+# Can use the "contains" sub-expression with rename
+# substitute column names for either standard deviation or mean
+
+
+# melt the columns into rows of 1 observation per row (need a name)
+molten_data <- gather(data_all, sample, reading, -id, -activity)
+# produces a long file of 679734      4 = 10299 * 66
+
+# aggregate by subject > activity > name
+# unnecessary
+# molten_data <- arrange(molten_data, id, activity, sample)
+
+# **************************************
+save(molten_data, file = "./temp_data/molten_data" )
+load("./temp_data/molten_data" )
+
+# create a new column of factors "mean", "standard_deviation"
+# code from dplyr example
+# chicago <- mutate(chicago, tempcat = factor(1 * (tmpd > 80), labels = c("cold", "hot")))
+molten_data <- mutate(molten_data,
+                       statistic = factor( regexpr("mean", molten_data$sample) < 0,
+                                           labels = c("mean", "standard_deviation")))
+
+# calculate the average for each grouping
+summary <- summarise(group_by(molten_data, id, activity, statistic), average_for_activity = mean(reading, na.rm = TRUE))
+
+# spread out the mean and standard deviation variables
+summary <- spread(summary, statistic, average_for_activity)
+
+# save the summary file
+save(summary, file = "./temp_data/summary_data")
+load("./temp_data/summary_data")
