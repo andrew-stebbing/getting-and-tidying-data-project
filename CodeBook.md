@@ -1,4 +1,4 @@
-#CodeBook for the Getting and Tidying Data course project.
+#CodeBook for the Getting and Cleaning Data course project.
 
 ##Index
 
