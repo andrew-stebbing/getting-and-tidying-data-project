@@ -54,7 +54,7 @@ if(all(colSums(is.na(data_all))==0)) message("\nThe data frame has no missing va
 # returns [1] TRUE
 
 # STEP 7
-n <- grep("mean[^F]|std|id|activity", names(data_all))
+n <- grep("mean[^F]|std|subject|activity", names(data_all))
 data_all <- data_all[, n]
 
 # at this stage the dataframe is 10299  X  68
