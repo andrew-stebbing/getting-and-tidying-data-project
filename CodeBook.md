@@ -137,14 +137,14 @@ From section 3 (above) each variable can be interpreted as follows:
 - statistical measurements are suffixed with ()
 - x, y, z denote the axis in a 3-dimensional plane for which the reading relates 
 
-For each of these various readings there is a statistical value corresponding to suffix in the variable name: -mean(), -min(), -std(), etc...A full list is available in section 3 (above)
+For each of these various readings there is a statistical value corresponding to suffix in the variable name: -mean(), -min(), -std(), etc... A full list is available in section 3 (above)
 
 Example interpretations
 
 Feature | Descriptive Label
 --------|------------------
-tBodyAcc-mean()-X | mean of the time domiain body acceleration along the X plane
-tBodyGyro-std()-Y | standard deviation of the gyroscpoic movement along the Y plane
+tBodyAcc-mean()-X | mean of the time domain of the body acceleration along the X plane
+tBodyGyro-std()-Y | standard deviation of the gyroscopic movement of the body along the Y plane
 fBodyGyroJerk-min()-Z | minimum of the frequency domain of the gyroscpoic readings of the body jerk signal along the Z plane.
 
 For the purposes of this assignment only values relating to mean and standard deviation are required. These relate to variables with the suffix `mean()` or `std()`.
