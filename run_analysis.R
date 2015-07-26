@@ -7,24 +7,6 @@
 
 # ******************************************************************************************
 
-# Helper function for creating descriptive variable names
-
-descriptive <- function(str) {
-    x <- str
-    x <- sub("Acc", "Acceleration", x)
-    x <- sub("A", "-A", x)
-    x <- gsub("B", "-B", x)
-    x <- sub("E", "-E", x)
-    x <- sub("G", "-G", x)
-    x <- sub("J", "-J", x)
-    x <- sub("M", "-M", x)
-    x <- gsub("[()]", "", x)
-    x <- gsub("std", "standard-deviation", x)
-    return(tolower(x))
-}
-
-# *****************************
-
 # Step 1
 library(dplyr)
 library(tidyr)
@@ -42,7 +24,6 @@ test_s <- read.table(paste0(data_folder, folder, "/subject_", folder, ".txt" ))
 
 # Assemble test files
 names(test_x) <- unlist(features[2]) 
-names(test_x) <- unlist(lapply(names(test_x), descriptive)) # Step 3
 names(test_y) <- "activity"
 names(test_s) <- "subject"
 
@@ -57,7 +38,6 @@ train_s <- read.table(paste0(data_folder, folder, "/subject_", folder, ".txt" ))
 
 # Assemble train files
 names(train_x) <- unlist(features[2]) 
-names(train_x) <- unlist(lapply(names(train_x), descriptive)) # Step 3
 names(train_y) <- "activity"
 names(train_s) <- "subject"
 
@@ -72,7 +52,7 @@ rm(train_all, test_all)
 data_all <- tbl_df(data_all)
 
 # STEP 6
-n <- grep("mean[^f]|standard|subject|activity", names(data_all))
+n <- grep("mean[()]|std|subject|activity", names(data_all))
 data_all <- data_all[, n]
 
 # STEP 7
