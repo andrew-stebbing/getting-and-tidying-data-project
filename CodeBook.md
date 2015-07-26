@@ -7,7 +7,7 @@ Version 1.0
 2. The data files from the experiment
 3. Details of the observations that were recorded by the smartphone for every activity
 4. The look-up table for each acitivity
-5. Details of how the run_analysis.R works
+5. Preliminary set-up
 
 ---------
 
@@ -125,69 +125,30 @@ The complete list of variables of each feature vector is available in 'features.
 
 ##4. The look-up table for each activity
 
-In the downloaded data files each activity is denoted by an integer between 1:6. The is a supplied look-up table, `acivity_labels.txt` which cross-references each integer with its corresponding activity
+In the downloaded data files each activity is denoted by an integer between 1:6. There is a supplied look-up table, `acivity_labels.txt` which cross-references each integer with its corresponding activity
 
-- 1 => WALKING
-- 2 => WALKING_UPSTAIRS
-- 3 => WALKING_DOWNSTAIRS
-- 4 => SITTING
-- 5 => STANDING
-- 6 => LAYING
+-  1 = WALKING
+-  2 = WALKING_UPSTAIRS
+-  3 = WALKING_DOWNSTAIRS
+-  4 = SITTING
+-  5 = STANDING
+-  6 = LAYING
 
-------
+##5. Preliminary set-up
 
-#5. The run_analysis.R script
+- Prior to running the script the compressed data was downloaded from the course web-site [https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip](https://d396qusza40orc.cloudfront.netgetdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip)
+-  The compressed file was 'unzipped' which automatically creates a seperate folder for the data files `UCI HAR Dataset`
+-  The resulting directory structure contains 2 further sub-folders *'test'* and *'train'* from which the necessary data is extracted by the `run_analysis.R` script to complete the assignment.
+-----------------
 
-There are 5 requirements for the script:
+Use of the data is licensed from:
 
-1. Merge the training and the test sets to create one data set.
-2. Extract only the measurements on the mean and standard deviation for each measurement. 
-3. Use descriptive activity names to name the activities in the data set
-4. Appropriately label the data set with descriptive variable names. 
-5. From the data set in step 4, create a second, independent tidy data set with the average of each variable for each activity and each subject.
+Davide Anguita, Alessandro Ghio, Luca Oneto, Xavier Parra and Jorge L. Reyes-Ortiz. Human Activity Recognition on Smartphones using a Multiclass Hardware-Friendly Support Vector Machine. International Workshop of Ambient Assisted Living (IWAAL 2012). Vitoria-Gasteiz, Spain. Dec 2012
 
-###Requirements 1 & 4 
+This dataset is distributed AS-IS and no responsibility implied or explicit can be addressed to the authors or their institutions for its use or misuse. Any commercial use is prohibited.
 
-1. Load the `dplyr` and `tidyr` packages. Functions from these packages will be used later in the script.
-2. Download and unzip the data files for the "Human Activity Recognition Using Smartphones Dataset Version 1.0". The unzipped data will create its own sub-folder `UCI HAR Dataset` so the download can be saved to the working directory.
-3. Read in the data files. These are divided into 2 distinct sets (see section 2, above): training data and test data.
-    + Each subset comes in 3 parts
-        + the actual observations
-        + the activity being undertaken
-        + the participant for each activity
-    + Each file in the subset is read into the script as a data frame.
-        + _coding note_: it would have been more expedient to use the `fread()` function from the `data.table` package but this causes a _fatal_ error in RStudio which was not resolved _(mac OS X 10.7.5, RStudio 0.99.441 running R version 3.1.3.)_
-    + The variables for the `y` and `s` files are appropriately labelled proir to merging
-    + The 3 files are then each assembled into a temporay data frame using `cbind()`
-4. Included within the data files is `features.txt` file which lists the experimental observations for each variable in the `X_` file of each subset. This list is used for the column names of the `X_` files.
-    + This "features" file is read in as a data frame but a vector of "names" for the variable labels is required. The script extracts the actual feature names from column 2 and `unlist()` them to create the required vector. _This satisfies requirement 4 of the assignment; to label all the variables._
-    + A graph representation of the assembly process:
-    + ![assembly process graphic](assembly.gif)   
-5. The 2 subsets are than assembled into a larger data frame using `rbind()`
-    + _to free up memory all the individual data frames created from reading-in and assembling the subsets are removed from the environment using `rm()`_
-6. The resulting data frame is then wrapped in a data frame table from the `dplyr` package to assist with the tidying process
-    + There is a simple test at this point just to confirm that the resultant data set does not containing any missing values.
+Jorge L. Reyes-Ortiz, Alessandro Ghio, Luca Oneto, Davide Anguita. November 2012.
 
-###Requirement 2
-
-7. A subset of the data frame is created by extracting only those variables that relate to mean or standard deviations.
-    + Only the variables containing `mean()` are extracted. Variables with the suffix `Mean` or `meanFreq` are excluded as these are averages obtained from the existing data, not observations (see section 3).
-    + _coding note_: as there are some duplicate variable names (a result of using the `features.txt` list) the `select{dplyr}` function returns an error. The script therefore uses a basic regular expression to return the indexes of the `names()` vector that match the pattern. This is then used to subset the data frame.
-     
-###Requirement 3
-
-8. The supplied look-up table is used to convert the integer code for each activity into a character string of the actual activity.
-    + the script creates a character vector of cross-referenced activities and then substitues this for the `activity` column in the dataframe.
-
-###Requirement 5
-
-9. Create a "long file" by *'melting'* the data into a row for every observation. Uses the `gather(){dplyr}` function.
-10. Create a new column of factors to identify each observation as either "mean" or "standard deviation"
-    + this is done using a regular expression pattern to determine whether the character string in the _sample_ column contains the word "mean".
-11. Summarise the data for the average of each variable for each activity and each subject.
-    + the data is grouped by `subject` > `activity` > `statistical type`
-12. *'Spread'* the data so that there are 2 variables _average mean_ and _average standard deviation_ for each `subject` > `activity`
-13. Create a new file from the summarised data.
 
 
     
