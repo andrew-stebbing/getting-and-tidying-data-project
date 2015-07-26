@@ -55,6 +55,13 @@ There are 5 requirements for the script:
 
 The script works as follows:
 
+There is short *'helper'* function that is used later to create descriptive variable names (see [CodeBook](CodeBook.md) section 4). In essense it splits the labels provided in the `features.txt` file into component parts by
+
+- adding a hyphen between capital letters
+- expanding Acc into Acceleration and std in standard-deviation
+- removes the brackets ()
+- changes the whole label to lowercase
+
 ###Requirements 1 & 4 
 
 1. Load the `dplyr` and `tidyr` packages. Functions from these packages will be used later in the script.
@@ -68,7 +75,8 @@ The script works as follows:
     + The variables for the `y` and `s` files are appropriately labelled proir to merging
     + The 3 files are then each assembled into a temporay data frame using `cbind()`
 3. Included within the data is a `features.txt` file which lists the type of experimental observation for each variable in the `X_` file from each subset. These are then used for the column names of the `X_` files.
-    + The `features.txt` file is read in as a data frame but a vector of "names" for the variable labels is required. The script extracts the actual feature names from column 2 of the features data frame and uses `unlist()` to create the required vector. _This satisfies requirement 4 of the assignment; to label all the variables._  
+    + The `features.txt` file is read in as a data frame but a vector of "names" for the variable labels is required. The script extracts the actual feature names from column 2 of the features data frame and uses `unlist()` to create the required vector.
+    + The helper function `descriptive()` is then used in `lapply()` across the `names()` to create a more descriptive name for each variable.
 4. The 2 subsets are than assembled into a larger data frame using `rbind()`
     + _to free up memory all the individual data frames created from reading-in and assembling the subsets are removed from the environment using `rm()`_
     + Below is a graphic representation of the assembly process:
@@ -78,7 +86,7 @@ The script works as follows:
 ###Requirement 2
 
 6. A subset of the data frame is created by extracting only those variables that relate to mean or standard deviations.
-    + Only the variables containing `mean()` are extracted. Variables with the suffix `Mean` or `meanFreq` are excluded as these are averages obtained from the existing data not observations (see section 3 of [CodeBook.md](CodeBook.md))).
+    + Only the variables containing `mean` are extracted. Variables with the suffix `meanfreq` are excluded as these are averages obtained from the existing data not observations (see section 3 of [CodeBook.md](CodeBook.md))).
     + _coding note_: as there are some duplicate variable names (a result of using the `features.txt` list) the `select{dplyr}` function returns an error. The script therefore uses a basic regular expression to return the indexes of the `names()` vector that match the pattern. This is then used to subset the data frame.
      
 ###Requirement 3
