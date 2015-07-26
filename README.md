@@ -95,8 +95,8 @@ The script uses the forward pipe operator `%>%` to chain the remaining steps tog
     + this is done using a regular expression pattern to determine whether the character string in the _sample_ column contains the word "mean".
 10. Summarise the data for the average of each variable for each activity and each subject using `summarise()`.
     + the data is grouped by `subject` > `activity` > `statistical type`
-11. *'Spread'* the data using `spread()` so that there are 2 variables _average mean_ and _average standard deviation_ for each `subject` > `activity`
-12. Create and save a new file from the summarised data. This file can then be loaded back into R with `read.table("summary.txt", header = TRUE)`
+11. *'Spread'* the data using `spread()` so that there are 2 variables *average_mean* and *average_standard_deviation* for each `subject` > `activity`
+12. Create and save a new file, `summary.txt`, from the summarised data. This file can then be loaded back into R with `read.table("summary.txt", header = TRUE)`
 
 -----------------
 
