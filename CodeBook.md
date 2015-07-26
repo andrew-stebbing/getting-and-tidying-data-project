@@ -6,8 +6,9 @@
 Version 1.0
 2. The data files from the experiment
 3. Details of the observations that were recorded by the smartphone for every activity
-4. The look-up table for each acitivity
-5. Preliminary set-up
+4. Descriptive variables
+5. The look-up table for each acitivity
+6. Preliminary set-up
 
 ---------
 
@@ -123,7 +124,31 @@ Additional vectors obtained by averaging the signals in a signal window sample. 
 
 The complete list of variables of each feature vector is available in 'features.txt' from the downloaded data set
 
-##4. The look-up table for each activity
+##4. Descriptive variables
+
+For the purposes of this assignment each of the variables names was expanded to provided a more descriptive label. (see [README](README.md), section run_analysis.R, for further details)
+
+In summary
+
+- t = time domain, f = frequency domain
+- body = reading from a phone strapped to the body
+- gyro = gryroscopic reading
+- acc = accelerometer readings, 
+- jerk = body jerk signals
+- statistical measurements are suffixed with ()
+- x, y, z denote the axis in a 3-dimensional plane for which the reading relates
+
+Example
+
+Feature | Descriptive Label
+--------|------------------
+tBodyAcc-mean()-X | t-body-acceleration-mean-x
+fBodyGyroJerkMag-std()-Y | f-body-gyro-jerk-mag-standard-deviation-y
+tBodyGyroJerk-min()-Z | t-body-gyro-jerk-min-z
+
+
+
+##5. The look-up table for each activity
 
 In the downloaded data files each activity is denoted by an integer between 1:6. There is a supplied look-up table, `acivity_labels.txt` which cross-references each integer with its corresponding activity
 
@@ -134,7 +159,7 @@ In the downloaded data files each activity is denoted by an integer between 1:6.
 -  5 = STANDING
 -  6 = LAYING
 
-##5. Preliminary set-up
+##6. Preliminary set-up
 
 - Prior to running the script the compressed data was downloaded from the course web-site [https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip](https://d396qusza40orc.cloudfront.netgetdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip)
 -  The compressed file was 'unzipped' which automatically creates a seperate folder for the data files `UCI HAR Dataset`
