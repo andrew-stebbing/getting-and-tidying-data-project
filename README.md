@@ -2,7 +2,7 @@
 
 ##Course Project
 
-This is the project for the course Getting and Cleaning Data, module 3 of the [Data Analysis Track](https://www.coursera.org/specializations/jhudatascience/1) from [Johns Hopkins University](https://www.jhu.edu/) and hosted on [Coursera](https://www.coursera.org/).
+This is the course project for the module Getting and Cleaning Data, of the [Data Analysis Track](https://www.coursera.org/specializations/jhudatascience/1) from [Johns Hopkins University](https://www.jhu.edu/), hosted on [Coursera](https://www.coursera.org/).
 
 ###Overview
 
@@ -14,7 +14,7 @@ The project uses data from the Human Activity Recognition Using Smartphones Data
 
  A compressed file with all the data for the project was obtained from [https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip](https://d396qusza40orc.cloudfront.netgetdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip)
 
-###Project Files
+##Project Files
 
 ####README.md
 
@@ -24,20 +24,21 @@ This file
 
 This is the main R programming script for the project which does the following:
 
-1. Downloads and unzips the data files for the project
-2. Combines the constituant data files into a single data set
-3. Subsets that data set to extract only the measurements on the mean and standard deviation for each measurement.
-4. Uses the supplied look-up table to identify the activity type from a numerical code
-5. Labels all the data variables
-6. Creates and saves an independent, tidy, summary data set with the average of each variable for each activity and each subject.
+1. Combines the constituant project data files into a single data set
+2. Subsets that data set to extract only the measurements of the mean and standard deviation for each measurement.
+3. Uses the supplied look-up table to identify the activity type from a numerical code
+4. Labels all the data variables
+5. Creates and saves an independent, tidy, summary data set with the average of each variable for each activity and each subject.
 
-Full details of the workings of this script are to be found in the file [CodeBook.md](CodeBook.md), section 5.
+Full details of the workings of this script are to be found in [CodeBook.md](CodeBook.md), section 5.
 
-####summary.RData
+Note: this script can only be run as long as the Samsung data is in your working directory
+
+####summary.txt
 
 The summary data file created in step 12 of the R programming script `run_analysis.R`. This is a tidy data set with the average of each variable for each activity and each subject.
 
-To load this file use `load("summary.RData")` The file will then be available in the current R programming environment with the variable name `summary`
+To load this file use `read.table("summary.txt", header = TRUE)` 
 
 ####CodeBook.md
 
@@ -48,7 +49,7 @@ Version 1.0
 2. Details of the downloaded data files from the experiment
 3. Details of the observations that were recorded by the smartphone for every activity in the experiment
 4. The look-up table for each acitivity
-5. Details of how the run_analysis.R creates the `summary.RData` file
+5. Details of how the run_analysis.R creates the `summary.txt` file
 
 -----------------
 
