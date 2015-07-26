@@ -80,7 +80,7 @@ The script works as follows:
 ###Requirement 2
 
 6. A subset of the data frame is created by extracting only those variables that relate to mean or standard deviations.
-    + Only the variables containing `mean` are extracted. Variables with the suffix `meanfreq` are excluded as these are averages obtained from the existing data not observations (see section 3 of [CodeBook.md](CodeBook.md)).
+    + Only the variables containing `mean()` are extracted. Variables with the suffix `meanFreq` or with `Mean` in the name are excluded as these are calculations obtained from the existing data not observations (see section 4 of [CodeBook.md](CodeBook.md) - Interpreting the variables).
     + _coding note_: as there are some duplicate variable names (a result of using the `features.txt` list) the `select{dplyr}` function returns an error. The script therefore uses a basic regular expression to return the indexes of the `names()` vector that match the pattern. This is then used to subset the data frame.
      
 ###Requirement 3
