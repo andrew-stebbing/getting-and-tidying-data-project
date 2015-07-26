@@ -139,6 +139,7 @@ In the downloaded data files each activity is denoted by an integer between 1:6.
 - Prior to running the script the compressed data was downloaded from the course web-site [https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip](https://d396qusza40orc.cloudfront.netgetdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip)
 -  The compressed file was 'unzipped' which automatically creates a seperate folder for the data files `UCI HAR Dataset`
 -  The resulting directory structure contains 2 further sub-folders *'test'* and *'train'* from which the necessary data is extracted by the `run_analysis.R` script to complete the assignment.
+
 -----------------
 
 Use of the data is licensed from:
