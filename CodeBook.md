@@ -6,7 +6,7 @@
 Version 1.0
 2. The data files from the experiment
 3. Details of the observations that were recorded by the smartphone for every activity
-4. Descriptive variables
+4. Interpreting the variables
 5. The look-up table for each acitivity
 6. Preliminary set-up
 
@@ -124,28 +124,32 @@ Additional vectors obtained by averaging the signals in a signal window sample. 
 
 The complete list of variables of each feature vector is available in 'features.txt' from the downloaded data set
 
-##4. Descriptive variables
+##4. Interpreting the variables
 
-For the purposes of this assignment each of the variables names was expanded to provided a more descriptive label. (see [README](README.md), section run_analysis.R, for further details)
-
-In summary
+From section 3 (above) each variable can be interpreted as follows:
 
 - t = time domain, f = frequency domain
 - body = reading from a phone strapped to the body
 - gyro = gryroscopic reading
 - acc = accelerometer readings, 
 - jerk = body jerk signals
+- mag = magnitude
 - statistical measurements are suffixed with ()
-- x, y, z denote the axis in a 3-dimensional plane for which the reading relates
+- x, y, z denote the axis in a 3-dimensional plane for which the reading relates 
 
-Example
+For each of these various readings there is a statistical value corresponding to suffix in the variable name: -mean(), -min(), -std(), etc...A full list is available in section 3 (above)
+
+Example interpretations
 
 Feature | Descriptive Label
 --------|------------------
-tBodyAcc-mean()-X | t-body-acceleration-mean-x
-fBodyGyroJerkMag-std()-Y | f-body-gyro-jerk-mag-standard-deviation-y
-tBodyGyroJerk-min()-Z | t-body-gyro-jerk-min-z
+tBodyAcc-mean()-X | mean of the time domiain body acceleration along the X plane
+tBodyGyro-std()-Y | standard deviation of the gyroscpoic movement along the Y plane
+fBodyGyroJerk-min()-Z | minimum of the frequency domain of the gyroscpoic readings of the body jerk signal along the Z plane.
 
+For the purposes of this assignment only values relating to mean and standard deviation are required. These relate to variables with the suffix `mean()` or `std()`.
+
+Variables with the suffix `meanFreq` and those with `Mean` in the name are excluded as these are calculations based on existing data and not observations themselves. (see section 3 above)
 
 
 ##5. The look-up table for each activity
